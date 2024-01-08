@@ -1,3 +1,6 @@
 [submodule "pegstr"]
 	path = pegstr
 	url = https://github.com/loudej/pegstr.git
+[submodule "gridfinity_openscad"]
+	path = gridfinity_openscad
+	url = https://github.com/loudej/gridfinity_openscad.git
