@@ -1,0 +1,3 @@
+[submodule "pegstr"]
+	path = pegstr
+	url = https://github.com/loudej/pegstr.git
