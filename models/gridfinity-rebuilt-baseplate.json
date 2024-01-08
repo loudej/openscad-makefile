@@ -1,0 +1,9 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "default2": {
+            "style_plate": 3,
+            "enable_magnet": true
+        }
+    }
+}

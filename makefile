@@ -64,6 +64,7 @@ INDEX_HTML       = index.html
 .PHONY: projects all variants png models clean dev
 
 projects:
+	$(MAKE) all PROJNAME=gridfinity-rebuilt-baseplate SCAD_PATH=gridfinity-rebuilt-openscad\gridfinity-rebuilt-baseplate.scad JSON_PATH=models\gridfinity-rebuilt-baseplate.json
 	$(MAKE) all PROJNAME=gridfinity_basic_cup SCAD_PATH=gridfinity_openscad/gridfinity_basic_cup.scad JSON_PATH=models/gridfinity_basic_cup.json INDEX_HTML=index.gridfinity_basic_cup.html
 	$(MAKE) all PROJNAME=pegstr SCAD_PATH=pegstr/pegstr.scad JSON_PATH=models/pegstr.json INDEX_HTML=index.pegstr.html
 
