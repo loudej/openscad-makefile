@@ -87,13 +87,13 @@ variants/%.json: $(JSON_PATH)
 png/$(PROJNAME).%.png: variants/%.json $(SCAD_PATH)
 	-@ $(MKDIR) png ||:
 	-@ $(MKDIR) deps ||:
-	$(SCADC) -o $@ -d $(patsubst variants/%.json,deps/%.png.deps,$<) -p $< -P $(patsubst variants/%.json,%,$<) $(SCAD_PATH)
+	$(SCADC) --enable=fast-csg -o $@ -d $(patsubst variants/%.json,deps/%.png.deps,$<) -p $< -P $(patsubst variants/%.json,%,$<) $(SCAD_PATH)
 
 # Generate STL
 stl/$(PROJNAME).%.stl: variants/%.json $(SCAD_PATH)
 	-@ $(MKDIR) stl ||:
 	-@ $(MKDIR) deps ||:
-	$(SCADC) -o $@ -d $(patsubst variants/%.json,deps/%.stl.deps,$<) -p $< -P $(patsubst variants/%.json,%,$<) $(SCAD_PATH)
+	$(SCADC) --enable=fast-csg -o $@ -d $(patsubst variants/%.json,deps/%.stl.deps,$<) -p $< -P $(patsubst variants/%.json,%,$<) $(SCAD_PATH)
 
 $(INDEX_HTML): $(JSON_PATH) $(PNG_TARGETS) $(STL_TARGETS) $(HTMLGEN)
 	$(info want to render index page  $(JSON_PATH) $(PNG_TARGETS) $(STL_TARGETS))

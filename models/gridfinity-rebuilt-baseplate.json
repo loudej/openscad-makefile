@@ -1,9 +1,8 @@
 {
     "fileFormatVersion": "1",
     "parameterSets": {
-        "default2": {
-            "style_plate": 3,
-            "enable_magnet": true
+        "5x5_screwtogether": {
+            "style_plate": 3
         }
     }
 }

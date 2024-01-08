@@ -1,7 +1,7 @@
 {
     "fileFormatVersion": "1",
     "parameterSets": {
-        "basic_cup_2x1x4": {
+        "2x1x4": {
             "width": 2,
             "depth": 1,
             "height": 4,
@@ -10,7 +10,7 @@
             "withLabel": "center",
             "labelWidth": 0.4
         },
-        "basic_cup_1x3x6": {
+        "1x3x6": {
             "width": 1,
             "depth": 3,
             "height": 6,
