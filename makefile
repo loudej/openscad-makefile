@@ -19,7 +19,7 @@ ifeq ($(isWindows),Yes)
     MKDIR = mkdir
     RMDIR = rmdir /s /q
     RM = del /Q /F
-    PYTHON = python3
+    PYTHON = python
 else
     RM_WILDCARD = rm -f
     MKDIR = mkdir
@@ -29,7 +29,7 @@ else
 endif
 
 # SCAD Compiler
-SCADC?=openscad
+SCADC?=C:\Program Files\OpenSCAD\openscad.exe
 
 # Parametric Generator
 PARAGEN?=parameter_generator.py
@@ -58,10 +58,17 @@ endif
 VARIANTS_TARGETS = $(patsubst %,variants/%.json,$(VARIANTS))
 PNG_TARGETS      = $(patsubst %,png/$(PROJNAME).%.png,$(VARIANTS))
 STL_TARGETS      = $(patsubst %,stl/$(PROJNAME).%.stl,$(VARIANTS))
+INDEX_HTML       = index.html
 
 ################################################################################
-.PHONY: all variants png models clean dev
-all: $(JSON_PATH) variants png models index.html
+.PHONY: projects all variants png models clean dev
+
+projects:
+	$(MAKE) all PROJNAME=gridfinity_basic_cup SCAD_PATH=gridfinity_openscad/gridfinity_basic_cup.scad JSON_PATH=models/gridfinity_basic_cup.json INDEX_HTML=index.gridfinity_basic_cup.html
+	$(MAKE) all PROJNAME=pegstr SCAD_PATH=pegstr/pegstr.scad JSON_PATH=models/pegstr.json INDEX_HTML=index.pegstr.html
+
+all: $(JSON_PATH) variants png models $(INDEX_HTML)
+
 
 # explicit wildcard expansion suppresses errors when no files are found
 include $(wildcard deps/*.deps)
@@ -87,7 +94,7 @@ stl/$(PROJNAME).%.stl: variants/%.json $(SCAD_PATH)
 	-@ $(MKDIR) deps ||:
 	$(SCADC) -o $@ -d $(patsubst variants/%.json,deps/%.stl.deps,$<) -p $< -P $(patsubst variants/%.json,%,$<) $(SCAD_PATH)
 
-index.html: $(JSON_PATH) $(PNG_TARGETS) $(STL_TARGETS) $(HTMLGEN)
+$(INDEX_HTML): $(JSON_PATH) $(PNG_TARGETS) $(STL_TARGETS) $(HTMLGEN)
 	$(info want to render index page  $(JSON_PATH) $(PNG_TARGETS) $(STL_TARGETS))
 	$(PYTHON) $(HTMLGEN) --ProjectName $(PROJNAME) --JsonPath $(JSON_PATH) --Output $@
 
