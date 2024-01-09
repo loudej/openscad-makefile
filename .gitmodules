@@ -7,3 +7,7 @@
 [submodule "gridfinity-rebuilt-openscad"]
 	path = gridfinity-rebuilt-openscad
 	url = https://github.com/loudej/gridfinity-rebuilt-openscad.git
+	branch = adjustment
+[submodule "drill_holder"]
+	path = drill_holder
+	url = https://github.com/andrejpk/gridfinity_openscad

@@ -1,0 +1,36 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "1x1x1_test": {
+            "gridx": 1,
+            "gridy": 1,
+            "gridz": 1,
+            "style_hole": 1
+        },
+        "1x1x6_pencils": {
+            "gridx": 1,
+            "gridy": 1,
+            "divx": 3,
+            "divy": 3,
+            "scoop": 0,
+            "style_tab": 5,
+            "style_hole": 1
+        },
+        "1x3x6": {
+            "gridx": 1,
+            "gridy": 3,
+            "divx": 1,
+            "divy": 1,
+            "style_hole": 1
+        },
+        "1x1x6_markers": {
+            "gridx": 1,
+            "gridy": 1,
+            "divx": 2,
+            "divy": 2,
+            "scoop": 0,
+            "style_tab": 5,
+            "style_hole": 1
+        }
+    }
+}
