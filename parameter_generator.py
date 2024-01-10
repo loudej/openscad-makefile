@@ -2,7 +2,7 @@ import json
 import sys
 import argparse
 
-VARIANTSDIR="variants"
+VARIANTSDIR="out/variants"
 
 ################################################################################
 ## Parametric File Write

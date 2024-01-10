@@ -1,0 +1,19 @@
+{
+    "fileFormatVersion": "1",
+    "project": "test-2",
+    "scad": "test.scad",
+    "parameterSets": {
+        "variation_1": {
+            "$fn": "40",
+            "RODCOUNT": "1"
+        },
+        "variation_2": {
+            "$fn": "40",
+            "RODCOUNT": "2"
+        },
+        "variation_3": {
+            "$fn": "40",
+            "RODCOUNT": "3"
+        }
+    }
+}

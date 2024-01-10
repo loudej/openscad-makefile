@@ -23,20 +23,26 @@ def get_current_parametric_json(filename:str):
         json_object["parameterSets"] = {}
         return json_object
 
-def write_parametric_html(parametricSettings:dict, project_name:str, filename:str):
-    parameterSets = parametricSettings["parameterSets"]
+def write_parametric_html(inputs:list, filename:str):
 
-    # Detect Parameter Constants
-    firstSetValues = {}
-    setValuesIsVariable = {}
-    for parameterSetName in parameterSets:
-        for key, value in parameterSets[parameterSetName].items():
-            prevValue = firstSetValues.get(key, None)
-            if prevValue == None:
-                firstSetValues[key] = value
-                continue
-            if prevValue != value:
-                setValuesIsVariable[key] = True
+    for input in inputs:
+        project_name = input["project"]
+        parameterSets = input["parameterSets"]
+
+        # Detect Parameter Constants
+        firstSetValues = {}
+        setValuesIsVariable = {}
+        for parameterSetName in parameterSets:
+            for key, value in parameterSets[parameterSetName].items():
+                prevValue = firstSetValues.get(key, None)
+                if prevValue == None:
+                    firstSetValues[key] = value
+                    continue
+                if prevValue != value:
+                    setValuesIsVariable[key] = True
+
+        input["firstSetValues"] = firstSetValues
+        input["setValuesIsVariable"] = setValuesIsVariable
 
     # HTML Render
     html_output = f"""
@@ -45,42 +51,61 @@ def write_parametric_html(parametricSettings:dict, project_name:str, filename:st
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{variableNameToTitle(project_name)} OpenSCAD Models Download Page</title>
+    <title>OpenSCAD Models Download Page</title>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>{variableNameToTitle(project_name)} OpenSCAD Models Download Page</h1>
+    <h1>OpenSCAD Models Download Page</h1>
 
     <h2 id="toc">Table Of Content</h2>
     <ul class="toc_list">
 """
-    for parameterSetName in parameterSets:
+    for input in inputs:
+        project_name = input["project"]
+        parameterSets = input["parameterSets"]
+
         html_output += f"""\
-        <li><a href="#{parameterSetName}">{variableNameToTitle(parameterSetName)}</a></li>
+        <li><a href="#{project_name}">{variableNameToTitle(project_name)}</a></li>
+        <ul>
+"""
+        for parameterSetName in parameterSets:
+            html_output += f"""\
+            <li><a href="#{project_name}.{parameterSetName}">{variableNameToTitle(parameterSetName)}</a></li>
+"""
+        html_output += f"""\
+        </ul>
 """
     html_output += f"""\
     </ul>
 """
+    for input in inputs:
+        project_name = input["project"]
+        parameterSets = input["parameterSets"]
+        firstSetValues = input["firstSetValues"]
+        setValuesIsVariable = input["setValuesIsVariable"]
 
-    # Content
-    html_output += f"""\
-    <h2 id="constants">Common Parameters</h2>
+        html_output += f"""\
+    <h2 id="{project_name}">{variableNameToTitle(project_name)}</h2>
+"""
+        # Content
+        html_output += f"""\
+    <h3 id="constants">Common Parameters</h3>
     <p>These are common values that are same in all variants below and is placed here to reduce clutter in the download list:</p>
     <ul>
 """
-    for key, value in firstSetValues.items():
-        if setValuesIsVariable.get(key, None) != True:
-            html_output += f"""\
+        for key, value in firstSetValues.items():
+            if setValuesIsVariable.get(key, None) != True:
+                html_output += f"""\
         <li><b>{key}</b> : {value} </li>
 """
-    html_output += f"""\
+        html_output += f"""\
     </ul>
 """
 
     # Content
-    html_output += f"""\
-    <h2 id="download">Download</h2>
+        html_output += f"""\
+    <h3 id="download">Download</h3>
     <table>
         <tr>
             <th>Contact</th>
@@ -90,30 +115,32 @@ def write_parametric_html(parametricSettings:dict, project_name:str, filename:st
             <th>Table Of Content</th>
         </tr>
 """
-    for parameterSetName in parameterSets:
-        html_output += f"""
+        for parameterSetName in parameterSets:
+            html_output += f"""
         <tr>
             <th><a href="png/{project_name}.{parameterSetName}.png"><img src="png/{project_name}.{parameterSetName}.png" alt="OpenSCAD generated preview of {parameterSetName}" height="100"></a></th>
-            <th id="{parameterSetName}">{variableNameToTitle(parameterSetName)}</th>
+            <th id="{project_name}.{parameterSetName}">{variableNameToTitle(parameterSetName)}</th>
 """
-        html_output += f"""\
+            html_output += f"""\
             <th>
                 <ul class="parameters">
 """
-        for key, value in parameterSets[parameterSetName].items():
-            if setValuesIsVariable.get(key, None) == True:
-                html_output += f"""\
+            for key, value in parameterSets[parameterSetName].items():
+                if setValuesIsVariable.get(key, None) == True:
+                    html_output += f"""\
                     <li><b>{key}</b> : {value} </li>
 """
-        html_output += f"""\
+            html_output += f"""\
                 </ul>
             </th>
             <th><a href="stl/{project_name}.{parameterSetName}.stl" download>{project_name}.{parameterSetName}.stl</a></th>
             <th><a href="#toc">TOC</a></th>
         </tr>
 """
-    html_output += f"""\
+        html_output += f"""\
     </table>
+"""
+    html_output += f"""\
 </body>
 </html>
 """
@@ -126,14 +153,21 @@ def write_parametric_html(parametricSettings:dict, project_name:str, filename:st
 ################################################################################
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='This program helps generate openscad compatible parametric variations')
-    parser.add_argument('--ProjectName, -N', dest='project_name', help='name', default="test")
-    parser.add_argument('--JsonPath, -J', dest='parameter_set_path', help='name of openscad parametric settings json file', default="main.json")
+    parser.add_argument('inputs', nargs='+',  help='inputs in the form jsonpath:project', default="test")
     parser.add_argument('--Output', '-O',  dest='output_path', help='output', default="index.html")
     parser.add_argument('--ForceWrite', '-F',  dest='force_write', action="store_true", help='force write')
     args = parser.parse_args()
 
+    inputs = []
+    for input in args.inputs:
+        parts = input.split(':', 2)
+        parametric_json = get_current_parametric_json(parts[0])
+        parametric_json["project"] = parts[1]
+        inputs.append(parametric_json)
+
+
     ############################################################################
     ## Generate HTML
-    write_parametric_html(get_current_parametric_json(args.parameter_set_path), args.project_name, args.output_path)
+    write_parametric_html(inputs, args.output_path)
 else:
     print("Can Ony Be Run By Itself")
