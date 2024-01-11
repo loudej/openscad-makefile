@@ -1,0 +1,26 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "pliers": {
+            "holder_y_count": 4,
+            "holder_x_size": 23,
+            "holder_y_size": 11,
+            "corner_radius": 2
+        },
+        "socket_wrench": {
+            "holder_y_count": 1,
+            "holder_x_size": 12,
+            "holder_y_size": 12,
+            "corner_radius": 6,
+            "holder_cutout_side": 0.8,
+            "holder_offset": 15
+        },
+        "drywall_saw": {
+            "holder_y_count": 1,
+            "holder_x_size": 26,
+            "holder_y_size": 2.5,
+            "corner_radius": 2,
+            "holder_offset": 20
+        }
+    }
+}

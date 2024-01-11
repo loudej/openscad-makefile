@@ -1,0 +1,24 @@
+{
+    "fileFormatVersion": "1",
+    "scad": "../gridfinity_openscad/gridfinity_basic_cup.scad",
+    "parameterSets": {
+        "2x1x4": {
+            "width": 2,
+            "depth": 1,
+            "height": 4,
+            "chambers": 1,
+            "magnet_diameter": 6,
+            "withLabel": "center",
+            "labelWidth": 0.4
+        },
+        "1x3x6": {
+            "width": 1,
+            "depth": 3,
+            "height": 6,
+            "chambers": 1,
+            "magnet_diameter": 6,
+            "withLabel": "center",
+            "labelWidth": 0.4
+        }
+    }
+}
