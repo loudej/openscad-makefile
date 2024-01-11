@@ -1,5 +1,6 @@
 {
     "fileFormatVersion": "1",
+    "scad": "../drill_holder/gridfinity_drill_holder_standard.scad",
     "parameterSets": {
         "default": {}
     }

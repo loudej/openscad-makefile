@@ -1,5 +1,6 @@
 {
     "fileFormatVersion": "1",
+    "scad": "../gridfinity-rebuilt-openscad/gridfinity-rebuilt-bins.scad",
     "parameterSets": {
         "1x1x1_test": {
             "gridx": 1,

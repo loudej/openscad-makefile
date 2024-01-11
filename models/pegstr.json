@@ -1,5 +1,6 @@
 {
     "fileFormatVersion": "1",
+    "scad": "../pegstr/pegstr.scad",
     "parameterSets": {
         "pliers": {
             "holder_y_count": 4,

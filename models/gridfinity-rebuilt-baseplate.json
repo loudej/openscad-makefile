@@ -1,5 +1,6 @@
 {
     "fileFormatVersion": "1",
+    "scad": "../gridfinity-rebuilt-openscad/gridfinity-rebuilt-baseplate.scad",
     "parameterSets": {
         "5x5_screwtogether": {
             "style_plate": 3
