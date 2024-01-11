@@ -1,0 +1,13 @@
+[submodule "pegstr"]
+	path = pegstr
+	url = https://github.com/loudej/pegstr.git
+[submodule "gridfinity_openscad"]
+	path = gridfinity_openscad
+	url = https://github.com/loudej/gridfinity_openscad.git
+[submodule "gridfinity-rebuilt-openscad"]
+	path = gridfinity-rebuilt-openscad
+	url = https://github.com/loudej/gridfinity-rebuilt-openscad.git
+	branch = adjustment
+[submodule "drill_holder"]
+	path = drill_holder
+	url = https://github.com/andrejpk/gridfinity_openscad
